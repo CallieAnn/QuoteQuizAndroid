@@ -14,7 +14,8 @@ namespace Lab3
         TextView answerTextView;
         TextView scoreTextView;
         string guess;
-        int score = 0;
+        int right = 0;
+        int wrong = 0;
         Quote current;
         string person;
 
@@ -37,8 +38,9 @@ namespace Lab3
 
             if(savedInstanceState != null)
             {
-                score = savedInstanceState.GetInt("Score", 0);
-                scoreTextView.Text = "Score: " + score.ToString();
+                right = savedInstanceState.GetInt("Right", 0);
+                wrong = savedInstanceState.GetInt("Wrong", 0);
+                SetScore();
             }
             // Display another quote when the "Next Quote" button is tapped
             var nextButton = FindViewById<Button>(Resource.Id.nextButton);
@@ -60,21 +62,29 @@ namespace Lab3
                 if(person == guess)
                 {
                     answerTextView.Text = "You are correct!";
-                    score++;
-                    scoreTextView.Text = "Score: " + score.ToString();
+                    right++;
+                    SetScore();
                 }
 
                 else
                 {
+                    wrong++;
+                    SetScore();
                     answerTextView.Text = "Incorrect, the answer is " + person;
                 }
 
             };
         }
 
+        private void SetScore()
+        {
+            scoreTextView.Text = "Correct: " + right.ToString() + "\n Incorrect: " + wrong.ToString();
+        }
+
         protected override void OnSaveInstanceState(Bundle outState)
         {
-            outState.PutInt("Score", score);
+            outState.PutInt("Right", right);
+            outState.PutInt("Wrong", wrong);
             base.OnSaveInstanceState(outState);
         }
     }
