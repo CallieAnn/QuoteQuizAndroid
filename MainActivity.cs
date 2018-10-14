@@ -2,6 +2,8 @@
 using Android.Widget;
 using Android.OS;
 using System;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Lab3
 {
@@ -16,7 +18,6 @@ namespace Lab3
         string guess;
         int right = 0;
         int wrong = 0;
-        Quote current;
         string person;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -24,24 +25,35 @@ namespace Lab3
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Main);
 
-            // Create the quote collection and display the current quote
-            quoteCollection = new QuoteBank();
-            quoteCollection.LoadQuotes();
-            quoteCollection.GetNextQuote();
-
-            quotationTextView = FindViewById<TextView>(Resource.Id.quoteTextView);
-            quotationTextView.Text = quoteCollection.CurrentQuote.Quotation;
-
             answerTextView = FindViewById<TextView>(Resource.Id.answerTextView);
             guessEditText = FindViewById<EditText>(Resource.Id.guessEditText);
             scoreTextView = FindViewById<TextView>(Resource.Id.scoreTextView);
 
             if(savedInstanceState != null)
             {
+                //Deserialize the QuoteBank object
+                string currentQuotes = savedInstanceState.GetString("QuoteCollection");
+                XmlSerializer x = new XmlSerializer(typeof(QuoteBank));
+                quoteCollection = (QuoteBank)x.Deserialize(new StringReader(currentQuotes));
+
+                //get the score from the bundle and display
                 right = savedInstanceState.GetInt("Right", 0);
                 wrong = savedInstanceState.GetInt("Wrong", 0);
                 SetScore();
             }
+            else
+            {   // Create the quote collection and display the current quote
+                quoteCollection = new QuoteBank();
+                quoteCollection.LoadQuotes();
+                quoteCollection.GetNextQuote();
+            }
+
+            quotationTextView = FindViewById<TextView>(Resource.Id.quoteTextView);
+            quotationTextView.Text = quoteCollection.CurrentQuote.Quotation;
+
+            
+
+            
             // Display another quote when the "Next Quote" button is tapped
             var nextButton = FindViewById<Button>(Resource.Id.nextButton);
             nextButton.Click += delegate {
@@ -83,6 +95,14 @@ namespace Lab3
 
         protected override void OnSaveInstanceState(Bundle outState)
         {
+            //serialize the current quote collection.  
+            StringWriter writer = new StringWriter();
+            XmlSerializer quoteSerializer = new XmlSerializer(quoteCollection.GetType());
+            quoteSerializer.Serialize(writer, quoteCollection);
+            string currentQuoteCollection = writer.ToString();
+            outState.PutString("QuoteCollection", currentQuoteCollection);
+
+            //save the number of right and wrong answers
             outState.PutInt("Right", right);
             outState.PutInt("Wrong", wrong);
             base.OnSaveInstanceState(outState);
