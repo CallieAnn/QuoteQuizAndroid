@@ -86,12 +86,31 @@ namespace Lab3
                 }
 
             };
+
+            var restartButton = FindViewById<Button>(Resource.Id.restartButton);
+            restartButton.Click += delegate
+            {
+                guessEditText.Text = "";
+                answerTextView.Text = "";
+                scoreTextView.Text = "";
+
+                right = 0;
+                wrong = 0;
+
+                quoteCollection = new QuoteBank();
+                quoteCollection.LoadQuotes();
+                quoteCollection.GetNextQuote();
+                quotationTextView.Text = quoteCollection.CurrentQuote.Quotation;
+
+            };
         }
+
 
         private void SetScore()
         {
             scoreTextView.Text = "Correct: " + right.ToString() + "\n Incorrect: " + wrong.ToString();
         }
+
 
         protected override void OnSaveInstanceState(Bundle outState)
         {

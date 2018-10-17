@@ -13,10 +13,11 @@ namespace Lab3
 	{
 		private Random randNumGen = new Random();
 		private List<Quote> quotes = new List<Quote>();
-        private int currentQuote = 0;
+        private int currentQuoteIndex = 0;
 
 		public List<Quote> Quotes { get { return quotes; } }
 		public Quote CurrentQuote { get; set; }
+        public int CurrentQuoteIndex { get; set; }
 
         /*
 		public Quote GetRandomQuote() 
@@ -34,11 +35,11 @@ namespace Lab3
         {
             if (quotes.Count > 0)
             {
-                CurrentQuote = quotes[currentQuote];
-                currentQuote++;
-                if (currentQuote >= quotes.Count)
+                CurrentQuote = quotes[CurrentQuoteIndex];
+                CurrentQuoteIndex++;
+                if (CurrentQuoteIndex >= quotes.Count)
                 {
-                    currentQuote = 0;
+                    CurrentQuoteIndex = 0;
                 }
             }
             return CurrentQuote;

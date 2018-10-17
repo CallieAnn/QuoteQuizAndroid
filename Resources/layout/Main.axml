@@ -44,10 +44,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scoreTextView" />
+	<Button
+        android:text="Restart Quiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/restartButton" />
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/space1"
         android:minHeight="20dp" />
+
 	
 </LinearLayout>
