@@ -68,20 +68,23 @@ namespace Lab3
             var enterButton = FindViewById<Button>(Resource.Id.enterButton);
             enterButton.Click += delegate {
                 guess = guessEditText.Text;
-                person = quoteCollection.CurrentQuote.Person;
 
-                //compare user guess with Person property of quote object
-                if(person == guess)
+                //check to see if correct answer
+                Boolean answer = quoteCollection.CheckAnswer(quoteCollection.CurrentQuote, guess);
+
+                //if correct
+                if(answer)
                 {
                     answerTextView.Text = GetString(Resource.String.CorrectAnswer);
-                    right++;
+                    right = quoteCollection.Right;
                     SetScore();
                 }
-
+                //if not correct
                 else
                 {
-                    wrong++;
+                    wrong = quoteCollection.Wrong;
                     SetScore();
+                    person = quoteCollection.CurrentQuote.Person;
                     answerTextView.Text = GetString(Resource.String.IncorrectAnswer) + person;
                 }
 

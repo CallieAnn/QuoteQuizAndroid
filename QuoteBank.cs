@@ -13,11 +13,14 @@ namespace Lab3
 	{
 		private Random randNumGen = new Random();
 		private List<Quote> quotes = new List<Quote>();
+       
      
 
 		public List<Quote> Quotes { get { return quotes; } }
 		public Quote CurrentQuote { get; set; }
         public int CurrentQuoteIndex { get; set; }
+        public int Right { get; set; } 
+        public int Wrong { get; set; } 
 
         /*
 		public Quote GetRandomQuote() 
@@ -53,6 +56,22 @@ namespace Lab3
 			quotes.Add(new Quote { Quotation = "If you get, give. If you learn, teach.", Person = "Maya Angelou"});
 			CurrentQuote = quotes [0];
 		}
+
+        public Boolean CheckAnswer(Quote current, string guess)
+        {
+            string person = current.Person;
+            if (person == guess)
+            {
+                Right++;
+                return true;
+            }
+
+            else
+            {
+                Wrong++;
+                return false;
+            }
+        }
 
 	}
 }
