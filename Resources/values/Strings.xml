@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ApplicationName">Lab3.Starter</string>
+    <string name="CorrectAnswer">You are correct!</string>
+    <string name="IncorrectAnswer">"Incorrect, the answer is "</string>
+    <string name="CorrectScore">Correct: </string>
+    <string name="IncorrectScore">Incorrect: </string>
 </resources>

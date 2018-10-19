@@ -73,7 +73,7 @@ namespace Lab3
                 //compare user guess with Person property of quote object
                 if(person == guess)
                 {
-                    answerTextView.Text = "You are correct!";
+                    answerTextView.Text = GetString(Resource.String.CorrectAnswer);
                     right++;
                     SetScore();
                 }
@@ -82,7 +82,7 @@ namespace Lab3
                 {
                     wrong++;
                     SetScore();
-                    answerTextView.Text = "Incorrect, the answer is " + person;
+                    answerTextView.Text = GetString(Resource.String.IncorrectAnswer) + person;
                 }
 
             };
@@ -108,7 +108,9 @@ namespace Lab3
 
         private void SetScore()
         {
-            scoreTextView.Text = "Correct: " + right.ToString() + "\n Incorrect: " + wrong.ToString();
+            scoreTextView.Text = GetString(Resource.String.CorrectScore)
+                + right.ToString() + "\n"  + GetString(Resource.String.IncorrectScore) 
+                + wrong.ToString();
         }
 
 

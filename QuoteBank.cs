@@ -13,7 +13,7 @@ namespace Lab3
 	{
 		private Random randNumGen = new Random();
 		private List<Quote> quotes = new List<Quote>();
-        private int currentQuoteIndex = 0;
+     
 
 		public List<Quote> Quotes { get { return quotes; } }
 		public Quote CurrentQuote { get; set; }
